@@ -12,7 +12,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
     <header
       className={cn(
         inter.className,
-        "fixed bottom-12 left-2/4 flex w-fit -translate-x-2/4 justify-between rounded-lg border border-border bg-card/30 p-1",
+        "fixed bottom-12 left-2/4 z-50 flex w-fit -translate-x-2/4 justify-between rounded-lg border border-border bg-card/20 p-1",
       )}
     >
       <div className="flex h-10 items-center">

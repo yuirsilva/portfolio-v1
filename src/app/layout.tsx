@@ -1,5 +1,7 @@
+import Clock from "@/components/clock";
 import Navbar from "@/components/navbar";
 import ThemeProvider from "@/components/theme-provider";
+import { inter } from "@/font/font";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
@@ -32,7 +34,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className="selection:bg-silent selection:text-accent-foreground"
+    >
       <body
         className={cn(
           defaultFont.className,
@@ -44,10 +50,19 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
           defaultTheme="dark"
-          themes={["light", "dark", "gruvbox", "blue", "mono"]}
+          themes={["light", "dark", "mono"]}
         >
           <main className="relative flex min-h-screen flex-col">
             <Navbar />
+            <Clock />
+            <span
+              className={cn(
+                inter.className,
+                "text-silent pointer-events-none absolute right-8 top-12 select-none text-xs sm:fixed",
+              )}
+            >
+              {new Date().toLocaleString("en-US", { year: "numeric" })}
+            </span>
             <div className="flex-1">{children}</div>
           </main>
         </ThemeProvider>

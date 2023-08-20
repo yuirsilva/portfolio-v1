@@ -20,9 +20,9 @@ interface ThemeSwitchProps {}
 
 const ThemeSwitch: FC<ThemeSwitchProps> = ({}) => {
   const { theme, setTheme } = useTheme();
-  const [position, setPosition] = useState<string>("dark");
+  const [position, setPosition] = useState<string>(theme!);
 
-  useEffect(() => setTheme(position), [position]);
+  useEffect(() => setTheme(position), [position, setTheme]);
 
   return (
     <DropdownMenu>
@@ -38,9 +38,7 @@ const ThemeSwitch: FC<ThemeSwitchProps> = ({}) => {
           <DropdownMenuRadioItem value="light">Light</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="dark">Dark</DropdownMenuRadioItem>
           <DropdownMenuSeparator />
-          <DropdownMenuRadioItem value="gruvbox">Gruvbox</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="mono">Mono</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="blue">Blue</DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>
