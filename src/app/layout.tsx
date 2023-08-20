@@ -50,7 +50,6 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
           defaultTheme="dark"
-          themes={["light", "dark", "mono"]}
         >
           <main className="relative flex min-h-screen flex-col">
             <Navbar />
@@ -58,7 +57,7 @@ export default function RootLayout({
             <span
               className={cn(
                 inter.className,
-                "text-silent pointer-events-none absolute right-8 top-12 select-none text-xs sm:fixed",
+                "pointer-events-none absolute right-8 top-12 select-none text-xs text-silent sm:fixed",
               )}
             >
               {new Date().toLocaleString("en-US", { year: "numeric" })}
