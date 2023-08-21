@@ -1,8 +1,11 @@
 "use client";
 
-import { FC, useEffect, useLayoutEffect, useRef, useState } from "react";
-import phrases from "./initialText";
+import phrases from "@/components/homepage/initialText";
 import gsap from "gsap";
+import { CustomEase } from "gsap/CustomEase";
+import { FC, useEffect, useRef, useState } from "react";
+gsap.registerPlugin(CustomEase);
+CustomEase.create("bezier", "0.8, 0, 0, 1");
 
 interface InitialProps {}
 
@@ -10,6 +13,7 @@ const Initial: FC<InitialProps> = ({}) => {
   const time = new Date().getHours();
   const app = useRef<HTMLDivElement>(null);
   const [render, isRendered] = useState<boolean>(false);
+  const timeline = useRef<gsap.core.Timeline>();
 
   // get array of phrases accordingly with current hour
   const currentHourPhrases =
@@ -18,16 +22,27 @@ const Initial: FC<InitialProps> = ({}) => {
       : time >= 12 && time < 18
       ? phrases.afternoon
       : phrases.evening;
+
   const randomPhrase =
     currentHourPhrases[(currentHourPhrases.length * Math.random()) | 0];
 
   useEffect(() => {
-    let ctx = gsap.context(() => {
-      gsap.from(".letter", {
-        top: "10rem",
-        stagger: 0.03,
-        ease: "back.out(1.1)",
-      });
+    const ctx = gsap.context(() => {
+      timeline.current = gsap
+        .timeline()
+        .to(".letter", {
+          top: "0rem",
+          rotate: 0,
+          stagger: 0.05,
+          ease: "bezier",
+          duration: 0.6,
+        })
+        .to(app.current, {
+          top: "-100%",
+          ease: "bezier",
+          duration: 2.2,
+          delay: 0.3,
+        });
     }, app);
 
     return () => ctx.revert();
@@ -40,17 +55,21 @@ const Initial: FC<InitialProps> = ({}) => {
   return (
     <div
       ref={app}
-      className="absolute left-0 top-0 z-[999] flex h-full w-full items-center justify-center bg-[#F3DFC1]"
+      className="absolute left-0 top-0 z-[999] flex h-full w-full select-none items-center justify-center bg-[#F3DFC1] px-3 text-center md:px-5"
     >
-      {render && (
-        <p className="overflow-hidden text-lg font-medium text-stone-950">
-          {randomPhrase.split("").map((letter, i) => (
-            <span className="letter relative" key={i}>
-              {letter}
-            </span>
+      <div className="whitespace-pre-wrap">
+        {render &&
+          randomPhrase.split(/(\s+)/).map((word, i) => (
+            <div
+              key={i}
+              className="inline-block overflow-hidden align-bottom text-lg font-medium leading-7 text-stone-950 md:text-2xl"
+            >
+              <span className="letter relative top-9 rotate-[15deg]">
+                {word}
+              </span>
+            </div>
           ))}
-        </p>
-      )}
+      </div>
     </div>
   );
 };

@@ -1,9 +1,9 @@
 "use client";
 
-import { inter } from "@/font/font";
-import { FC, useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { inter } from "@/font/font";
 import { cn } from "@/lib/utils";
+import { FC, useEffect, useState } from "react";
 
 interface ClockProps {}
 
@@ -28,7 +28,7 @@ const Clock: FC<ClockProps> = ({}) => {
     <span
       className={cn(
         inter.className,
-        "text-silent-foreground pointer-events-none absolute left-8 top-12 select-none text-xs tabular-nums md:fixed md:bottom-12 md:left-auto md:right-12 md:top-auto",
+        "pointer-events-none absolute left-8 top-12 select-none text-xs tabular-nums text-silent-foreground md:fixed md:bottom-12 md:left-auto md:right-12 md:top-auto",
       )}
     >
       {date.toLocaleString("en-US", {

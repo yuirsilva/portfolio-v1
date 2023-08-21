@@ -1,16 +1,36 @@
 "use client";
 
-import { FC, useRef } from "react";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
-import { Mesh } from "three";
+import {
+  Canvas,
+  MaterialNode,
+  extend,
+  useFrame,
+  useLoader,
+} from "@react-three/fiber";
+import { FC, useEffect, useRef } from "react";
+import { DoubleSide, TextureLoader } from "three";
+
+import PlaneMaterial from "@/components/homepage/shader/planeMaterial";
+
+extend({ PlaneMaterial });
+
+declare module "@react-three/fiber" {
+  // eslint-disable-next-line no-unused-vars
+  interface ThreeElements {
+    planeMaterial: MaterialNode<THREE.ShaderMaterial, typeof PlaneMaterial>;
+  }
+}
 
 interface WorldProps {}
 
 const World: FC<WorldProps> = ({}) => {
   return (
-    <Canvas>
+    <Canvas
+      camera={{
+        fov: 10,
+        position: [2, -2, 5],
+      }}
+    >
       <Experience />
     </Canvas>
   );
@@ -19,21 +39,21 @@ const World: FC<WorldProps> = ({}) => {
 interface ExperienceProps {}
 
 const Experience: FC<ExperienceProps> = ({}) => {
-  const objectRef = useRef<Mesh>(null!);
+  const planeMat = useRef<THREE.ShaderMaterial>(null!);
+  const image = useLoader(TextureLoader, "/joan.jpg");
 
-  useFrame((_, delta) => {
-    objectRef.current.rotation.y += delta;
+  useFrame(({ clock: { elapsedTime } }) => {
+    planeMat.current.uniforms["uTime"].value = elapsedTime;
   });
+  useEffect(() => {
+    planeMat.current.uniforms["uTexture"].value = image;
+  }, [image]);
 
   return (
-    <>
-      <OrbitControls makeDefault />
-
-      <mesh ref={objectRef}>
-        <boxGeometry />
-        <meshBasicMaterial color="#00FF00" />
-      </mesh>
-    </>
+    <mesh>
+      <planeGeometry args={[0.4, 0.6, 16, 16]} />
+      <planeMaterial ref={planeMat} side={DoubleSide} />
+    </mesh>
   );
 };
 

@@ -6,7 +6,7 @@ interface pageProps {}
 const page: FC<pageProps> = ({}) => {
   return (
     <div className="container pb-12 pt-28">
-      <article className="prose prose-base prose-neutral ml-auto mr-auto flex max-w-5xl flex-col gap-10 dark:prose-invert md:prose-xl prose-headings:text-xl prose-headings:font-medium prose-p:m-0 prose-a:decoration-1 prose-a:underline-offset-4">
+      <article className="prose prose-base prose-neutral ml-auto mr-auto flex max-w-5xl flex-col gap-10 pb-14 dark:prose-invert md:prose-xl prose-headings:text-xl prose-headings:font-medium prose-p:m-0 prose-a:decoration-1 prose-a:underline-offset-4 md:pb-4">
         <h1 className={display.className}>Yuri Silva</h1>
         <div className="flex flex-col gap-2">
           <p>
