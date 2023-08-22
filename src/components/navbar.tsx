@@ -17,7 +17,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
     >
       <div className="flex h-10 items-center">
         <div className="mr-10 hidden md:flex">
-          <Link href="/" className={cn(display.className, "px-2 text-4xl")}>
+          <Link href="/" className={cn(display.className, "p-2 text-4xl")}>
             y
           </Link>
         </div>

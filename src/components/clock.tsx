@@ -31,7 +31,7 @@ const Clock: FC<ClockProps> = ({}) => {
         "pointer-events-none absolute left-8 top-12 select-none text-xs tabular-nums text-silent-foreground md:fixed md:bottom-12 md:left-auto md:right-12 md:top-auto",
       )}
     >
-      {date.toLocaleString("en-US", {
+      {date.toLocaleString("pt-BR", {
         hour: "2-digit",
         minute: "numeric",
         second: "numeric",

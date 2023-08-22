@@ -8,11 +8,11 @@ import {
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { inter } from "@/font/font";
 import { cn } from "@/lib/utils";
-import { MoonSat } from "iconoir-react";
+import { HalfMoon } from "iconoir-react";
 import { useTheme } from "next-themes";
 import { FC, useEffect, useState } from "react";
 
@@ -28,7 +28,8 @@ const ThemeSwitch: FC<ThemeSwitchProps> = ({}) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild className={inter.className}>
         <Button variant="ghost" className="h-full">
-          <MoonSat />
+          <HalfMoon />
+          <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className={cn(inter.className, "w-56")}>
