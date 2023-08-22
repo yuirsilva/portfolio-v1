@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { CustomEase } from "gsap/CustomEase";
 import { FC, useEffect, useRef, useState } from "react";
 gsap.registerPlugin(CustomEase);
-CustomEase.create("bezier", "0.8, 0, 0, 1");
+CustomEase.create("bezier", "0.86, 0, 0.07, 1");
 
 interface InitialProps {}
 
@@ -40,9 +40,21 @@ const Initial: FC<InitialProps> = ({}) => {
         .to(app.current, {
           top: "-100%",
           ease: "bezier",
-          duration: 2.2,
+          duration: 1.3,
           delay: 0.3,
-        });
+        })
+        .to(
+          ".letter",
+          {
+            top: "-2rem",
+            ease: "bezier",
+            duration: 0.6,
+            stagger: 0.02,
+            rotate: 12,
+            opacity: 0,
+          },
+          "<",
+        );
     }, app);
 
     return () => ctx.revert();
@@ -64,7 +76,7 @@ const Initial: FC<InitialProps> = ({}) => {
               key={i}
               className="inline-block overflow-hidden align-bottom text-lg font-medium leading-7 text-stone-950 md:text-2xl"
             >
-              <span className="letter relative top-9 rotate-[15deg]">
+              <span className="letter relative top-9 inline-block rotate-[15deg]">
                 {word}
               </span>
             </div>
