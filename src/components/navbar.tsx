@@ -12,11 +12,12 @@ const Navbar: FC<NavbarProps> = ({}) => {
     <header
       className={cn(
         inter.className,
-        "fixed bottom-12 left-2/4 z-50 flex w-fit -translate-x-2/4 justify-between rounded-lg border border-border bg-card/20 p-1 backdrop-blur supports-[backdrop-blur]:bg-card/60",
+        "fixed bottom-12 left-2/4 z-50 flex w-[95%] max-w-[18.125rem] -translate-x-2/4 justify-between rounded-full border border-border bg-card/20 p-1 backdrop-blur supports-[backdrop-blur]:bg-card/60",
       )}
     >
-      <div className="flex h-10 items-center">
-        <div className="mr-0 md:mr-10 md:flex">
+      <div className="flex h-10 flex-1 items-center justify-between">
+        {/* <div className="mr-0 md:mr-10 md:flex"> */}
+        <div className="md:flex">
           <Link href="/" className={cn(display.className, "px-2 text-4xl")}>
             y
           </Link>
@@ -31,8 +32,8 @@ const Navbar: FC<NavbarProps> = ({}) => {
           >
             Connect
           </a>
+          <ThemeSwitch />
         </nav>
-        <ThemeSwitch />
       </div>
     </header>
   );
