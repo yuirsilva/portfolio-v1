@@ -21,13 +21,12 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 60 9.1% 97.8%;
 
-    --silent: 0 0% 64%;
+    --silent: 33 5% 32%;
     --silent-foreground: 24 9.8% 10%;
 
     --border: 20 5.9% 90%;
     --input: 20 5.9% 90%;
     --ring: 24.6 95% 53.1%;
-    /* --radius: 1rem; */
     --radius: 9999px;
   }
 

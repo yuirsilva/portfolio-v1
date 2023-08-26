@@ -57,7 +57,7 @@ export default function RootLayout({
             <span
               className={cn(
                 inter.className,
-                "pointer-events-none absolute right-8 top-12 select-none text-xs text-silent sm:fixed",
+                "pointer-events-none absolute right-8 top-12 z-50 select-none text-xs text-silent sm:fixed",
               )}
             >
               {new Date().toLocaleString("en-US", { year: "numeric" })}

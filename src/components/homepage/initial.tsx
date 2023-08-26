@@ -54,7 +54,8 @@ const Initial: FC<InitialProps> = ({}) => {
             opacity: 0,
           },
           "<",
-        );
+        )
+        .call(() => app.current?.remove());
     }, app);
 
     return () => ctx.revert();

@@ -1,15 +1,14 @@
 "use client";
 
-import { MeshTransmissionMaterial, useFBO, useGLTF } from "@react-three/drei";
+import { MeshTransmissionMaterial, useGLTF } from "@react-three/drei";
 import {
   Canvas,
   MaterialNode,
-  createPortal,
   extend,
   useFrame,
   useLoader,
 } from "@react-three/fiber";
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef } from "react";
 import * as THREE from "three";
 import { DoubleSide, TextureLoader } from "three";
 
@@ -35,6 +34,7 @@ const World: FC<WorldProps> = ({}) => {
         fov: 17,
         position: [0, 0, 4.2],
       }}
+      gl={{ antialias: false, alpha: false }}
     >
       <Experience />
     </Canvas>
@@ -55,12 +55,13 @@ const Experience: FC<ExperienceProps> = ({}) => {
   }, [image]);
 
   return (
-    <Lens>
+    <>
+      <Lens />
       <mesh position={[0, 0, -9]} rotation={[-0.4, -0.5, 0]}>
         <planeGeometry args={[1, 1.4, 16, 16]} />
         <planeMaterial ref={planeMat} side={DoubleSide} />
       </mesh>
-    </Lens>
+    </>
   );
 };
 
@@ -70,35 +71,23 @@ type GLTFResult = GLTF & {
   };
 };
 
-interface LensProps {
-  children: any;
-}
+interface LensProps {}
 
-const Lens: FC<LensProps> = ({ children }) => {
+const Lens: FC<LensProps> = () => {
   const { nodes } = useGLTF("/lens-transformed.glb") as GLTFResult;
-  const buffer = useFBO();
-  const [scene] = useState(() => new THREE.Scene());
   const { theme } = useTheme();
 
   const color = {
     dark: new THREE.Color("#44403C"),
     light: new THREE.Color("#D8D7D7"),
   };
-
   const bgColor = useRef<THREE.Color>(color.dark);
 
   if (theme) bgColor.current = color[theme as keyof typeof color];
 
-  useFrame((state) => {
-    state.gl.setRenderTarget(buffer);
-    state.gl.setClearColor(bgColor.current);
-    state.gl.render(scene, state.camera);
-    state.gl.setRenderTarget(null);
-  });
-
   return (
     <>
-      {createPortal(children, scene)}
+      <color attach="background" args={[bgColor.current]} />
       <mesh
         scale={[2, 2, 1]}
         rotation={[Math.PI / 2, 0, 0]}
@@ -106,11 +95,12 @@ const Lens: FC<LensProps> = ({ children }) => {
       >
         {/* @ts-expect-error idk */}
         <MeshTransmissionMaterial
-          buffer={buffer.texture}
           thickness={2}
           anisotropy={0.2}
-          chromaticAberration={0.02}
+          chromaticAberration={0.03}
           ior={4}
+          transmissionSampler
+          color={bgColor.current}
         />
       </mesh>
     </>

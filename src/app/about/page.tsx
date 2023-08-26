@@ -1,7 +1,13 @@
 import { display } from "@/font/font";
+import { Metadata } from "next";
 import { FC } from "react";
 
 interface pageProps {}
+
+export const metadata: Metadata = {
+  title: "Yuri Silva — About",
+  description: "Some words about me.",
+};
 
 const page: FC<pageProps> = ({}) => {
   return (
