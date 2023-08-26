@@ -119,7 +119,7 @@ const PlaneMaterial = shaderMaterial(
 
   void main() {
     float wave = vWave * 0.05;
-    vec3 texture = texture2D(uTexture, vUv + wave*2.).rgb;
+    vec3 texture = texture2D(uTexture, vUv + wave*3.).rgb;
 
     gl_FragColor = vec4(texture+uColor*0.04, 1.);
   }`,

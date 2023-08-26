@@ -7,6 +7,14 @@ import {
   useFrame,
   useLoader,
 } from "@react-three/fiber";
+import {
+  ChromaticAberration,
+  DotScreen,
+  EffectComposer,
+  Noise,
+  Pixelation,
+} from "@react-three/postprocessing";
+import { BlendFunction } from "postprocessing";
 import { FC, Suspense, useEffect, useRef } from "react";
 import * as THREE from "three";
 import { DoubleSide, TextureLoader } from "three";
@@ -61,10 +69,19 @@ const Experience: FC<ExperienceProps> = ({}) => {
   }, [image]);
 
   return (
-    <mesh>
-      <planeGeometry args={[0.4, 0.6, 16, 16]} />
-      <planeMaterial ref={planeMat} side={DoubleSide} />
-    </mesh>
+    <>
+      <EffectComposer>
+        <DotScreen
+          blendFunction={BlendFunction.PIN_LIGHT} // blend mode
+          angle={Math.PI * 0.5} // angle of the dot pattern
+          scale={8.0} // scale of the dot pattern
+        />
+      </EffectComposer>
+      <mesh>
+        <planeGeometry args={[0.6, 0.8, 16, 16]} />
+        <planeMaterial ref={planeMat} side={DoubleSide} />
+      </mesh>
+    </>
   );
 };
 
