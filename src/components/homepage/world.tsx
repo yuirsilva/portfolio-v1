@@ -1,6 +1,5 @@
 "use client";
 
-import { MeshTransmissionMaterial, useGLTF } from "@react-three/drei";
 import {
   Canvas,
   MaterialNode,
@@ -8,13 +7,11 @@ import {
   useFrame,
   useLoader,
 } from "@react-three/fiber";
-import { FC, useEffect, useRef } from "react";
+import { FC, Suspense, useEffect, useRef } from "react";
 import * as THREE from "three";
 import { DoubleSide, TextureLoader } from "three";
 
 import PlaneMaterial from "@/components/homepage/shader/planeMaterial";
-import { useTheme } from "next-themes";
-import { GLTF } from "three-stdlib";
 
 extend({ PlaneMaterial });
 
@@ -32,11 +29,20 @@ const World: FC<WorldProps> = ({}) => {
     <Canvas
       camera={{
         fov: 17,
-        position: [0, 0, 4.2],
+        position: [2, -2, 5],
       }}
-      gl={{ antialias: false, alpha: false }}
+      gl={{ antialias: true }}
     >
-      <Experience />
+      <Suspense
+        fallback={
+          <mesh>
+            <planeGeometry args={[0.4, 0.6, 8, 8]} />
+            <meshBasicMaterial color="#292524" />
+          </mesh>
+        }
+      >
+        <Experience />
+      </Suspense>
     </Canvas>
   );
 };
@@ -55,55 +61,10 @@ const Experience: FC<ExperienceProps> = ({}) => {
   }, [image]);
 
   return (
-    <>
-      <Lens />
-      <mesh position={[0, 0, -9]} rotation={[-0.4, -0.5, 0]}>
-        <planeGeometry args={[1, 1.4, 16, 16]} />
-        <planeMaterial ref={planeMat} side={DoubleSide} />
-      </mesh>
-    </>
-  );
-};
-
-type GLTFResult = GLTF & {
-  nodes: {
-    Cylinder: THREE.Mesh;
-  };
-};
-
-interface LensProps {}
-
-const Lens: FC<LensProps> = () => {
-  const { nodes } = useGLTF("/lens-transformed.glb") as GLTFResult;
-  const { theme } = useTheme();
-
-  const color = {
-    dark: new THREE.Color("#44403C"),
-    light: new THREE.Color("#D8D7D7"),
-  };
-  const bgColor = useRef<THREE.Color>(color.dark);
-
-  if (theme) bgColor.current = color[theme as keyof typeof color];
-
-  return (
-    <>
-      <color attach="background" args={[bgColor.current]} />
-      <mesh
-        scale={[2, 2, 1]}
-        rotation={[Math.PI / 2, 0, 0]}
-        geometry={nodes.Cylinder.geometry}
-      >
-        {/* @ts-expect-error idk */}
-        <MeshTransmissionMaterial
-          thickness={2}
-          anisotropy={0.2}
-          chromaticAberration={0.03}
-          ior={4}
-          transmissionSampler
-          color={bgColor.current}
-        />
-      </mesh>
-    </>
+    <mesh>
+      <planeGeometry args={[0.4, 0.6, 16, 16]} />
+      <planeMaterial ref={planeMat} side={DoubleSide} />
+    </mesh>
   );
 };
 

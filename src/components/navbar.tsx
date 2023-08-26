@@ -16,8 +16,6 @@ const Navbar: FC<NavbarProps> = ({}) => {
       )}
     >
       <div className="flex h-10 flex-1 items-center justify-between">
-        {/* <div className="mr-0 md:mr-10 md:flex"> */}
-        {/* <div className="md:flex"> */}
         <div className="flex">
           <Link href="/" className="px-1">
             <div className="h-8 w-8 rounded-full bg-foreground"></div>
